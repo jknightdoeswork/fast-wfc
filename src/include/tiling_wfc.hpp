@@ -233,11 +233,11 @@ private:
    * Generate the propagator which will be used in the wfc algorithm.
    */
   static std::vector<std::array<std::vector<unsigned>, 4>> generate_propagator(
-      const std::vector<std::tuple<unsigned, unsigned, unsigned, unsigned>>
-          &neighbors,
+      const std::vector<std::tuple<unsigned, unsigned, unsigned, unsigned>> &neighbors,
       std::vector<Tile<T>> tiles,
       std::vector<std::pair<unsigned, unsigned>> id_to_oriented_tile,
-      std::vector<std::vector<unsigned>> oriented_tile_ids) {
+      std::vector<std::vector<unsigned>> oriented_tile_ids)
+  {
     size_t nb_oriented_tiles = id_to_oriented_tile.size();
     std::vector<std::array<std::vector<bool>, 4>> dense_propagator(
         nb_oriented_tiles, {std::vector<bool>(nb_oriented_tiles, false),
@@ -258,15 +258,11 @@ private:
       auto add = [&](unsigned action, unsigned direction) {
         unsigned temp_orientation1 = action_map1[action][orientation1];
         unsigned temp_orientation2 = action_map2[action][orientation2];
-        unsigned oriented_tile_id1 =
-            oriented_tile_ids[tile1][temp_orientation1];
-        unsigned oriented_tile_id2 =
-            oriented_tile_ids[tile2][temp_orientation2];
-        dense_propagator[oriented_tile_id1][direction][oriented_tile_id2] =
-            true;
+        unsigned oriented_tile_id1 = oriented_tile_ids[tile1][temp_orientation1];
+        unsigned oriented_tile_id2 = oriented_tile_ids[tile2][temp_orientation2];
+        dense_propagator[oriented_tile_id1][direction][oriented_tile_id2] = true;
         direction = get_opposite_direction(direction);
-        dense_propagator[oriented_tile_id2][direction][oriented_tile_id1] =
-            true;
+        dense_propagator[oriented_tile_id2][direction][oriented_tile_id1] = true;
       };
 
       add(0, 2);
