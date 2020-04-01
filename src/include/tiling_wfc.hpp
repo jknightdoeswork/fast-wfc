@@ -239,21 +239,22 @@ private:
       std::vector<std::vector<unsigned>> oriented_tile_ids)
   {
     size_t nb_oriented_tiles = id_to_oriented_tile.size();
-    std::vector<std::array<std::vector<bool>, 4>> dense_propagator(
-        nb_oriented_tiles, {std::vector<bool>(nb_oriented_tiles, false),
-                            std::vector<bool>(nb_oriented_tiles, false),
-                            std::vector<bool>(nb_oriented_tiles, false),
-                            std::vector<bool>(nb_oriented_tiles, false)});
+    
+    std::vector<std::array<std::vector<bool>, 4>> dense_propagator(nb_oriented_tiles, 
+      {std::vector<bool>(nb_oriented_tiles, false),
+      std::vector<bool>(nb_oriented_tiles, false),
+      std::vector<bool>(nb_oriented_tiles, false),
+      std::vector<bool>(nb_oriented_tiles, false)});
 
     for (auto neighbor : neighbors) {
       unsigned tile1 = std::get<0>(neighbor);
       unsigned orientation1 = std::get<1>(neighbor);
+
       unsigned tile2 = std::get<2>(neighbor);
       unsigned orientation2 = std::get<3>(neighbor);
-      std::vector<std::vector<unsigned>> action_map1 =
-          Tile<T>::generate_action_map(tiles[tile1].symmetry);
-      std::vector<std::vector<unsigned>> action_map2 =
-          Tile<T>::generate_action_map(tiles[tile2].symmetry);
+
+      std::vector<std::vector<unsigned>> action_map1 = Tile<T>::generate_action_map(tiles[tile1].symmetry);
+      std::vector<std::vector<unsigned>> action_map2 = Tile<T>::generate_action_map(tiles[tile2].symmetry);
 
       auto add = [&](unsigned action, unsigned direction) {
         unsigned temp_orientation1 = action_map1[action][orientation1];
@@ -275,8 +276,7 @@ private:
       add(7, 0);
     }
 
-    std::vector<std::array<std::vector<unsigned>, 4>> propagator(
-        nb_oriented_tiles);
+    std::vector<std::array<std::vector<unsigned>, 4>> propagator(nb_oriented_tiles);
     for (size_t i = 0; i < nb_oriented_tiles; ++i) {
       for (size_t j = 0; j < nb_oriented_tiles; ++j) {
         for (size_t d = 0; d < 4; ++d) {
