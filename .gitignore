@@ -21,3 +21,4 @@ lib/*
 **/_deps
 
 src/**/*.obj
+src/**/*.os
