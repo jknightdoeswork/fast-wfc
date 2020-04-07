@@ -87,6 +87,16 @@ public:
       propagator.add_to_propagator(i, j, pattern);
     }
   }
+
+  void remove_all_other_wave_patterns(unsigned i, unsigned j, unsigned pattern) noexcept {
+	  for (int p = 0; p < nb_patterns; p++) {
+		  if (p != pattern) {
+			  wave.set(i,j,p, false);
+			  propagator.add_to_propagator(i, j, p);
+		  }
+	  }
+	  propagator.propagate(wave);
+  }
 };
 
 #endif // FAST_WFC_WFC_HPP_

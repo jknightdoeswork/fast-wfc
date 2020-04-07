@@ -79,7 +79,7 @@ public:
    */
   void add_to_propagator(unsigned y, unsigned x, unsigned pattern) noexcept {
     // All the direction are set to 0, since the pattern cannot be set in (y,x).
-    std::array<int, 4> temp = {};
+    std::array<int, 4> temp = {0,0,0,0};
     compatible.get(y, x, pattern) = temp;
     propagating.emplace_back(y, x, pattern);
   }
