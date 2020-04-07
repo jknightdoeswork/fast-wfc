@@ -88,15 +88,26 @@ public:
     }
   }
 
-  void remove_all_other_wave_patterns(unsigned i, unsigned j, unsigned pattern) noexcept {
-	  for (int p = 0; p < nb_patterns; p++) {
-		  if (p != pattern) {
-			  wave.set(i,j,p, false);
-			  propagator.add_to_propagator(i, j, p);
-		  }
-	  }
-	  propagator.propagate(wave);
-  }
+	void remove_all_other_wave_patterns(unsigned i, unsigned j, unsigned pattern) noexcept {
+		bool has_removed_anything = false;
+		for (int p = 0; p < nb_patterns; p++) {
+			if (p != pattern) {
+				if (wave.get(i,j,p)) {
+					// printf("[wfc] remove_all_other_wave_patterns removing [%d] from [%dx%d]\n", p, i, j);
+					wave.set(i,j,p, false);
+					propagator.add_to_propagator(i, j, p);
+					has_removed_anything = true;
+				}
+				else {
+					// printf("[wfc] remove_all_other_wave_patterns cannot remove [%d] from [%dx%d]\n", p, i, j);
+				}
+			}
+		}
+
+		if (has_removed_anything) {
+			propagator.propagate(wave);
+		}
+	}
 };
 
 #endif // FAST_WFC_WFC_HPP_
