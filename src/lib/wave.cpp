@@ -10,8 +10,14 @@ namespace {
 std::vector<double>
 get_plogp(const std::vector<double> &distribution) noexcept {
   std::vector<double> plogp;
+
   for (unsigned i = 0; i < distribution.size(); i++) {
-    plogp.push_back(distribution[i] * log(distribution[i]));
+	float p = 0;
+	if (abs(distribution[i]) > 0.0001) {
+		p = distribution[i] * log(distribution[i]);
+	}	
+	printf("[wave] %d plogp thingy: %f\n", i, p);
+    plogp.push_back(p);
   }
   return plogp;
 }
